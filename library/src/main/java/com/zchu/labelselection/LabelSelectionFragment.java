@@ -31,6 +31,7 @@ public class LabelSelectionFragment extends Fragment implements OnItemDragListen
     private LabelSelectionAdapter mLabelSelectionAdapter;
     private ItemTouchHelper mHelper;
     private OnEditFinishListener mOnEditFinishListener;
+    private OnItemAction mOnItemAction;
 
     public static LabelSelectionFragment newInstance(ArrayList<Label> selectedLabels, ArrayList<Label> unselectedLabels) {
 
@@ -74,6 +75,9 @@ public class LabelSelectionFragment extends Fragment implements OnItemDragListen
         super.onAttach(context);
         if (context instanceof OnEditFinishListener) {
             mOnEditFinishListener = (OnEditFinishListener) context;
+        }
+        if (context instanceof OnItemAction) {
+            mOnItemAction = (OnItemAction) context;
         }
     }
 
@@ -120,6 +124,7 @@ public class LabelSelectionFragment extends Fragment implements OnItemDragListen
             ItemDragHelperCallBack callBack = new ItemDragHelperCallBack(this);
             mLabelSelectionAdapter.setOnChannelDragListener(this);
             mLabelSelectionAdapter.setOnEditFinishListener(mOnEditFinishListener);
+            mLabelSelectionAdapter.setOnItemAction(mOnItemAction);
             mHelper = new ItemTouchHelper(callBack);
             mHelper.attachToRecyclerView(mRecyclerView);
 

@@ -41,6 +41,7 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private LabelTitleViewHolder selectedTitleViewHolder;
     private OnItemDragListener onChannelDragListener;
     private OnEditFinishListener onEditFinishListener;
+    private OnItemAction onItemAction;
     private boolean isEditing;
 
     public LabelSelectionAdapter(List<LabelSelectionItem> data) {
@@ -59,6 +60,10 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void setOnEditFinishListener(OnEditFinishListener onEditFinishListener) {
         this.onEditFinishListener = onEditFinishListener;
+    }
+
+    public void setOnItemAction(OnItemAction onItemAction) {
+        this.onItemAction = onItemAction;
     }
 
     @Override
@@ -141,7 +146,7 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    private void bindLabelAlwaySelectedViewHolder(LabelSelectedViewHolder holder, LabelSelectionItem item) {
+    private void bindLabelAlwaySelectedViewHolder(LabelSelectedViewHolder holder, final LabelSelectionItem item) {
         holder.tvName.setText(item.getLabel().getName());
         holder.tvName.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -156,6 +161,29 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 return true;
             }
         });
+        holder.tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //固定选项不需要考虑是否编辑模式，设置为false，点击以后直接跳转新页面
+                performSelectItemClick(item.getLabel(), false);
+            }
+        });
+    }
+
+    private void performSelectItemClick(Label label, boolean isEditing) {
+        if (onItemAction != null) {
+            if (isEditing) {
+                onItemAction.onRemoveItem(label);
+            } else {
+                onItemAction.onClickItem(label);
+            }
+        }
+    }
+
+    private void performUnselectItemClick(Label label) {
+        if (onItemAction != null) {
+            onItemAction.onAppendItem(label);
+        }
     }
 
     private void bindLabelSelectedViewHolder(final LabelSelectedViewHolder holder, final LabelSelectionItem item) {
@@ -171,7 +199,7 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if (isEditing) {
                     unselectedLabel(holder, item);
                 }
-
+                performSelectItemClick(item.getLabel(), isEditing);
             }
         };
         holder.ivRemove.setOnClickListener(onClickListener);
@@ -225,6 +253,7 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             @Override
             public void onClick(View v) {
                 selectedLabel(holder, item);
+                performUnselectItemClick(item.getLabel());
             }
         });
     }

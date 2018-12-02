@@ -2,16 +2,18 @@ package com.labelselection.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.zchu.labelselection.Label;
 import com.zchu.labelselection.LabelSelectionFragment;
 import com.zchu.labelselection.OnEditFinishListener;
+import com.zchu.labelselection.OnItemAction;
 import com.zchu.log.Logger;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnEditFinishListener {
+public class MainActivity extends AppCompatActivity implements OnEditFinishListener, OnItemAction {
 
     private LabelSelectionFragment labelSelectionFragment;
 
@@ -80,5 +82,20 @@ public class MainActivity extends AppCompatActivity implements OnEditFinishListe
         Logger.e(selectedLabels);
         Logger.e(unselectedLabel);
         Logger.e(alwaySelectedLabels);
+    }
+
+    @Override
+    public void onAppendItem(Label label) {
+        Log.e("###", "onAppendItem");
+    }
+
+    @Override
+    public void onRemoveItem(Label label) {
+        Log.e("###", "onRemoveItem");
+    }
+
+    @Override
+    public void onClickItem(Label label) {
+        Log.e("###", "onClickItem");
     }
 }
