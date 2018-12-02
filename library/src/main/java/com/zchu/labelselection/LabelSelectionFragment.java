@@ -84,7 +84,7 @@ public class LabelSelectionFragment extends Fragment implements OnItemDragListen
         Bundle arguments = getArguments();
         if (arguments != null) {
             final ArrayList<LabelSelectionItem> labelSelectionItems = new ArrayList<>();
-            labelSelectionItems.add(new LabelSelectionItem(LabelSelectionItem.TYPE_LABEL_SELECTED_TITLE, "切换栏目"));
+            labelSelectionItems.add(new LabelSelectionItem(LabelSelectionItem.TYPE_LABEL_SELECTED_TITLE, "我的关注"));
             ArrayList<Label> alwaySelectedLabels = arguments.getParcelableArrayList(BUNDLE_ALWAY_SELECTED_LABELS);
             if (alwaySelectedLabels != null && alwaySelectedLabels.size() > 0) {
                 for (Label alwaySelectedLabel : alwaySelectedLabels) {
@@ -97,7 +97,7 @@ public class LabelSelectionFragment extends Fragment implements OnItemDragListen
                     labelSelectionItems.add(new LabelSelectionItem(LabelSelectionItem.TYPE_LABEL_SELECTED, selectedLabel));
                 }
             }
-            labelSelectionItems.add(new LabelSelectionItem(LabelSelectionItem.TYPE_LABEL_UNSELECTED_TITLE, "点击添加更多标签"));
+            labelSelectionItems.add(new LabelSelectionItem(LabelSelectionItem.TYPE_LABEL_UNSELECTED_TITLE, "推荐关注"));
             ArrayList<Label> unselectedLabels = arguments.getParcelableArrayList(BUNDLE_UNSELECTED_LABELS);
             if (unselectedLabels != null && unselectedLabels.size() > 0) {
 

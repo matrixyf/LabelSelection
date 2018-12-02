@@ -90,15 +90,17 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
             case LabelSelectionItem.TYPE_LABEL_SELECTED_TITLE:
                 selectedTitleViewHolder = new LabelTitleViewHolder(mLayoutInflater.inflate(R.layout.item_label_title, parent, false));
+                selectedTitleViewHolder.tvHint.setVisibility(View.GONE);
+                selectedTitleViewHolder.tvAction.setVisibility(View.VISIBLE);
                 selectedTitleViewHolder.tvAction.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (isEditing) {
                             changeEditState(false);
-                            selectedTitleViewHolder.tvTitle.setText("切换栏目");
+                            selectedTitleViewHolder.tvTitle.setText("我的关注");
                             selectedTitleViewHolder.tvAction.setText("编辑");
                         } else {
-                            selectedTitleViewHolder.tvTitle.setText("拖动排序");
+                            selectedTitleViewHolder.tvTitle.setText("我的关注");
                             selectedTitleViewHolder.tvAction.setText("完成");
                             changeEditState(true);
                         }
@@ -108,6 +110,7 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
             case LabelSelectionItem.TYPE_LABEL_UNSELECTED_TITLE:
                 LabelTitleViewHolder unselectedTitleViewHolder = new LabelTitleViewHolder(mLayoutInflater.inflate(R.layout.item_label_title, parent, false));
+                unselectedTitleViewHolder.tvHint.setVisibility(View.VISIBLE);
                 unselectedTitleViewHolder.tvAction.setVisibility(View.GONE);
                 viewHolder = unselectedTitleViewHolder;
                 break;
@@ -147,7 +150,7 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     //开启编辑模式
                     changeEditState(true);
                     //  mEditViewHolder.setText(R.id.tvEdit, "完成");
-                    selectedTitleViewHolder.tvTitle.setText("拖动排序");
+                    selectedTitleViewHolder.tvTitle.setText("我的关注");
                     selectedTitleViewHolder.tvAction.setText("完成");
                 }
                 return true;
@@ -204,7 +207,7 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     //开启编辑模式
                     changeEditState(true);
                     //  mEditViewHolder.setText(R.id.tvEdit, "完成");
-                    selectedTitleViewHolder.tvTitle.setText("拖动排序");
+                    selectedTitleViewHolder.tvTitle.setText("我的关注");
                     selectedTitleViewHolder.tvAction.setText("完成");
                 }
                 if (onChannelDragListener != null) {
@@ -437,10 +440,10 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return;
         }
         if (state) {
-            selectedTitleViewHolder.tvTitle.setText("拖动排序");
+            selectedTitleViewHolder.tvTitle.setText("我的关注");
             selectedTitleViewHolder.tvAction.setText("完成");
         } else {
-            selectedTitleViewHolder.tvTitle.setText("切换栏目");
+            selectedTitleViewHolder.tvTitle.setText("我的关注");
             selectedTitleViewHolder.tvAction.setText("编辑");
             finishEdit();
 
@@ -518,11 +521,13 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         private TextView tvTitle;
         private TextView tvAction;
+        private TextView tvHint;
 
         private LabelTitleViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvAction = (TextView) itemView.findViewById(R.id.tv_action);
+            tvHint = (TextView) itemView.findViewById(R.id.tv_hint);
         }
     }
 
