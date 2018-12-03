@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,9 +74,9 @@ public class LabelSelectionFragment extends Fragment implements OnItemDragListen
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnEditFinishListener) {
-            mOnEditFinishListener = (OnEditFinishListener) context;
-        }
+//        if (context instanceof OnEditFinishListener) {
+//            mOnEditFinishListener = (OnEditFinishListener) context;
+//        }
         if (context instanceof OnItemAction) {
             mOnItemAction = (OnItemAction) context;
         }
@@ -123,7 +124,7 @@ public class LabelSelectionFragment extends Fragment implements OnItemDragListen
 
             ItemDragHelperCallBack callBack = new ItemDragHelperCallBack(this);
             mLabelSelectionAdapter.setOnChannelDragListener(this);
-            mLabelSelectionAdapter.setOnEditFinishListener(mOnEditFinishListener);
+//            mLabelSelectionAdapter.setOnEditFinishListener(mOnEditFinishListener);
             mLabelSelectionAdapter.setOnItemAction(mOnItemAction);
             mHelper = new ItemTouchHelper(callBack);
             mHelper.attachToRecyclerView(mRecyclerView);
@@ -142,11 +143,26 @@ public class LabelSelectionFragment extends Fragment implements OnItemDragListen
         //添加到现在的位置
         data.add(endPos, labelSelectionItem);
         mLabelSelectionAdapter.notifyItemMoved(starPos, endPos);
+        Log.e("###", "onItemMove");
+        if (mOnItemAction != null) {
+            mOnItemAction.onMoveItem(getSelectedItems());
+        }
+    }
+
+    private List<Label> getSelectedItems() {
+        ArrayList<Label> selectedLabels = new ArrayList<>();
+        for (LabelSelectionItem labelSelectionItem : mLabelSelectionAdapter.getData()) {
+            if (labelSelectionItem.getItemType() == LabelSelectionItem.TYPE_LABEL_SELECTED ) {
+                selectedLabels.add(labelSelectionItem.getLabel());
+            }
+        }
+        return selectedLabels;
     }
 
     @Override
     public void onStarDrag(RecyclerView.ViewHolder viewHolder) {
         mHelper.startDrag(viewHolder);
+        Log.e("###", "onStarDrag");
     }
 
     public boolean cancelEdit() {

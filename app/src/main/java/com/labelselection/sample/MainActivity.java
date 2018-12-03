@@ -12,8 +12,9 @@ import com.zchu.labelselection.OnItemAction;
 import com.zchu.log.Logger;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnEditFinishListener, OnItemAction {
+public class MainActivity extends AppCompatActivity implements OnItemAction {
 
     private LabelSelectionFragment labelSelectionFragment;
 
@@ -77,12 +78,6 @@ public class MainActivity extends AppCompatActivity implements OnEditFinishListe
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
     }
 
-    @Override
-    public void onEditFinish(ArrayList<Label> selectedLabels, ArrayList<Label> unselectedLabel, ArrayList<Label> alwaySelectedLabels) {
-        Logger.e(selectedLabels);
-        Logger.e(unselectedLabel);
-        Logger.e(alwaySelectedLabels);
-    }
 
     @Override
     public void onAppendItem(Label label) {
@@ -97,5 +92,10 @@ public class MainActivity extends AppCompatActivity implements OnEditFinishListe
     @Override
     public void onClickItem(Label label) {
         Log.e("###", "onClickItem");
+    }
+
+    @Override
+    public void onMoveItem(List<Label> labels) {
+        Log.e("###", "onMoveItem");
     }
 }

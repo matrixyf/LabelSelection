@@ -58,9 +58,9 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.onChannelDragListener = onChannelDragListener;
     }
 
-    public void setOnEditFinishListener(OnEditFinishListener onEditFinishListener) {
-        this.onEditFinishListener = onEditFinishListener;
-    }
+//    public void setOnEditFinishListener(OnEditFinishListener onEditFinishListener) {
+//        this.onEditFinishListener = onEditFinishListener;
+//    }
 
     public void setOnItemAction(OnItemAction onItemAction) {
         this.onItemAction = onItemAction;
@@ -343,7 +343,7 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             onMove(currentPosition, selectedLastPosition + 1);
 
         }
-        finishEdit();
+//        finishEdit();
     }
 
     private void onMove(int starPos, int endPos) {
@@ -474,7 +474,7 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else {
             selectedTitleViewHolder.tvTitle.setText("我的关注");
             selectedTitleViewHolder.tvAction.setText("编辑");
-            finishEdit();
+//            finishEdit();
 
         }
         isEditing = state;
