@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import javax.security.auth.callback.Callback;
 
 /**
  * author : zchu
@@ -180,9 +183,9 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    private void performUnselectItemClick(Label label) {
+    private void performUnselectedItemClick(Label label, Action0 action) {
         if (onItemAction != null) {
-            onItemAction.onAppendItem(label);
+            onItemAction.onAppendItem(label, action);
         }
     }
 
@@ -252,8 +255,13 @@ class LabelSelectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedLabel(holder, item);
-                performUnselectItemClick(item.getLabel());
+                Action0 action = new Action0() {
+                    @Override
+                    public void call() {
+                        selectedLabel(holder, item);
+                    }
+                };
+                performUnselectedItemClick(item.getLabel(), action);
             }
         });
     }

@@ -5,7 +5,7 @@ import java.util.List;
 public interface OnItemAction {
 
     /** 点击未选中label的时候回调*/
-    void onAppendItem(Label label);
+    void onAppendItem(Label label, Action0 action);
     /** 编辑状态下点击已选中label的回调*/
     void onRemoveItem(Label label);
     /** 未编辑状态下点击选中label的回调*/

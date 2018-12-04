@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import com.zchu.labelselection.Action0;
 import com.zchu.labelselection.Label;
 import com.zchu.labelselection.LabelSelectionFragment;
-import com.zchu.labelselection.OnEditFinishListener;
 import com.zchu.labelselection.OnItemAction;
 import com.zchu.log.Logger;
 
@@ -80,9 +80,19 @@ public class MainActivity extends AppCompatActivity implements OnItemAction {
 
 
     @Override
-    public void onAppendItem(Label label) {
+    public void onAppendItem(Label label, Action0 action) {
         Log.e("###", "onAppendItem");
+        i++;
+        if (i < 3) {
+            try {
+                action.call();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+    int i = 0;
 
     @Override
     public void onRemoveItem(Label label) {
